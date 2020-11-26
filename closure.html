@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //隐藏数据
+        function createClosure(){
+            let data = {};
+            return {
+                set(key,v){
+                    data[key] = v;
+                },
+                get(key){
+                    return data[key];
+                }
+            }
+            
+        }
+        var c = createClosure();
+        c.set('a',232323);
+        console.log(c.get('a'))
+
+        for(var i= 0;i<=5;i++){
+            (function(){
+                var j  = i;
+                console.log(j)
+                setTimeout(function(){
+                    console.log(j)
+                })
+            })()
+        }
+    </script>
+</body>
+</html>

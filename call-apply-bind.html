@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1.
+        //call 第一个参数指的是改变this指向为哪个对象  还可以传递多个参数   直接执行
+        //call只传递一个参数时
+        var a = {
+            user: 'qqq',
+            fn: function() {
+                console.log(this); //a
+                console.log(this.user); //qqq
+            }
+        }
+        var b = a.fn;
+        b.call(a);
+        //call 传递多个参数时
+        var a = {
+            user: 'qqq',
+            fn: function(x, y) {
+                console.log(this);//a
+                console.log(this.user);//qqq
+                console.log(x+y);//3
+            }
+        }
+        var b = a.fn;
+        b.call(a, 1, 2);
+        
+        var who = {
+                name: "xiaoming",
+                birht: 1990,
+                age: function() {
+                    function getage() {
+                        var now = new Date().getFullYear();
+                        console.log(this)
+                        return now - this.birht;
+                    }
+                    return getage.call(who)
+                }
+            }
+            console.log(who.age())
+        //2.
+        //apply 第一个参数指的是改变this指向为哪个对象 第二个参数以数组的形式  直接执行
+        var a = {
+            user: 'qqq',
+            fn: function() {
+                console.log(this);//a
+                console.log(this.user);//qqq
+            }
+        }
+        var b = a.fn;
+        b.apply(a)
+        //apply第二个参数是一个数组
+        var a = {
+            user: 'qqq',
+            fn: function(x, y) {
+                console.log(this);//a
+                console.log(this.user);//qqq
+                console.log(x+y);//3
+            }
+        }
+        var b = a.fn;
+        b.apply(a, [1, 2])
+        //如果call和apply的第一个参数写的是null,那么this指向的是window对象
+        var a = {
+            user: 'qqq',
+            fn: function() {
+                console.log(this)//window
+            }
+        }
+        var b = a.fn;
+        b.apply(null)
+        //bind  第一个参数指的是改变this指向为哪个对象 返回的是一个修改过的函数 不直接执行
+        var a = {
+            user: 'qqq',
+            fn: function() {
+                console.log(this);//a
+                console.log(this.user);//qqq
+            }
+        }
+        var b = a.fn;
+        var c = b.bind(a);
+        c();
+        //bind 也可以有多个参数，并且参数可以执行的时候再次添加，但要注意的是，参数是按照形参的顺序进行的。
+        var a = {
+            user: 'qqq',
+            fn: function(x, y, z) {
+                console.log(this);//a
+                console.log(this.user);//qqq
+                console.log(x, y, z);//1, 2, 3
+            }
+        }
+        var b= a.fn;
+        var c = b.bind(a, 1);
+        c(2, 3);
+
+
+        var obj = { 
+                '2': 3, 
+                '3': 4, 
+                'length': 2, 
+                'splice': Array.prototype.splice, 
+                'push': Array.prototype.push
+            }
+obj.push(1);
+obj.push(2);
+console.log(obj)
+    </script>
+</body>
+</html>

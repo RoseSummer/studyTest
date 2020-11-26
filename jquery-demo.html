@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>第一段落</p>
+    <p>第二段落</p>
+    <p>第三段落</p>
+    <p>第四段落</p>
+    <script>
+            class Jquery {
+                constructor(selector) {
+                    const result = document.querySelectorAll(selector);
+                    const len = result.length;
+                    for(let i = 0; i < len; i++){
+                        this[i] = result[i];
+                    }
+                    this.length = len;
+                    this.selector = selector;
+                }
+                get(index) {
+                    return this[index];
+                }
+                each(fn) {
+                    for(let i = 0; i < this.length; i++){
+                        const elem = this[i];
+                        elem.index = i;
+                        fn(elem)
+                    }
+                }
+                on(type, fn){
+                    return this.each(elem => {
+                        elem.addEventListener(type, fn , false)
+                    })
+                }
+                index(){
+                    for(let i = 0; i < this.length; i++){
+                        const index = i;
+                        return index;
+                    }
+                }
+            }
+            const $p = new Jquery('p');
+            console.log($p)
+            console.log($p.get(0));
+            $p.each(function(elem){
+                console.log(elem.nodeName);
+            })
+            $p.on("click",function(){
+                console.log(this.index)
+            })
+
+
+            
+        //    function fun (){
+        //         for(let i = 0; i < 3; i++){
+        //                 const elem = $p.get(0);
+        //                 (elem => {
+        //                     console.log(elem)
+        //                     elem.addEventListener('click', function fn(){
+        //                         console.log(elem)
+        //                     } , false)
+        //                 })(elem)
+        //             }    
+        //     }
+
+            // fun()
+            
+    </script>
+</body>
+</html>

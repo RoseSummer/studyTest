@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <p>深拷贝</p>
+        <ul>
+            <li>第一步：首先使用typeof判断（传入的参数）是否为对象，如果参数类型不为object或者为null,直接返回</li>
+            <li>第二步：是对象的情况下，重新定义一个新变量，用于存储数据，在细分参数是数组还是对象（instanceof），重新进行赋值</li>
+            <li>第三步：遍历对象，使用hasOwnProperty方法判断对象的属性是否为自有属性（非原型上的属性）</li>
+            <li>第四步：给对象的属性赋值，递归（对象嵌套情况）再回到第一部，直到所有的属性不再是对象为止</li>
+        </ul>
+        <button id="btn">按钮</button>
+    </div>
+    <script>
+    //1.手写深拷贝   浅拷贝指的是只拷贝内存地址（引用，修改其中一个都改变）   深拷贝指的是重新开辟另一个空间（修改互不影响）
+        var obj = {
+            a: 'dssdsd',
+            b:{
+                c: '1221'
+            }
+        }
+        var obj1 = obj; //浅拷贝
+        obj1.a = 'jjjj';
+        obj1.b.c = 'kkkk';
+        console.log(obj.a);
+        console.log(obj.b.c);
+        //深拷贝
+        function deepObj(obj){
+            if(typeof obj !== 'object' || obj == null){
+                return obj;
+            }
+             var result ;
+            if(obj instanceof Array){
+                result = [];
+            }else{
+                result = {};
+            }
+        
+            for(let key in obj){
+                if(obj.hasOwnProperty(key)){
+                    result[key] = deepObj(obj[key])
+                }
+            }
+            return result;
+        }
+        var obj2 = deepObj(obj);
+        obj2.a = 'rrerre'
+        console.log(obj.a,obj2.a)
+
+    //2.手写bind
+    function foo(){
+        console.log(this)
+    }
+    foo.bind(obj2)()
+
+    Function.prototype.bind1=function(){
+        var result = Array.prototype.slice.call(arguments);
+        console.log(result);
+        var a = result.shift();
+        console.log(a)
+        console.log(result)
+        var self = this;
+         return function(){
+            console.log(result.concat(Array.prototype.slice.call(arguments)))
+            return self.apply(a, result.concat(Array.prototype.slice.call(arguments)))  //result.concat(Array.prototype.slice.call(arguments))
+        } 
+    }
+    foo.bind1(obj2,4,5,6,7,8)(9)
+    //3.防抖和节流
+    var btn = document.getElementById('btn');
+    btn.addEventListener('click',debounce(submit),false);
+    function submit(){
+        console.log(this)
+    }
+    function debounce(fn){
+        var timer = null;
+        console.log(this)
+        return function(){
+            if(!!timer){
+                clearTimeout(timer)
+            }else{
+                timer = setTimeout(() => {
+                    console.log(this)
+                    console.log(1)
+                    fn();
+                },5000)
+            }
+            console.log(this)
+        }  
+    }
+    </script>
+</body>
+</html>

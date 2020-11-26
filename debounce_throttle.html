@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //防抖：指频繁触发的情况下，只有足够的空闲时间，才执行一次代码
+        //应用场景 用户注册时候的手机号验证和邮箱验证
+
+        //throttle 节流： 指一定时间内js方法只跑一次。
+        //应用场景  监听页面滚动事件
+        function foo(){
+            console.log(a)
+        }
+        function bar(){
+            var a = 3;
+            foo();
+        }
+        var a = 2;
+        bar();
+    </script>
+</body>
+</html>

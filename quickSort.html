@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>快速排序</h1>
+        <p>1.在数据集之中选择一个元素作为基准</p>
+        <p>2.所有小于基准的元素，都移动到基准的左边；所有大于基准的元素，都移动到基准的右边。</p>
+        <p>3.对基准左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止。</p>
+    </div>
+    <script>
+  
+        function quickSort(arr){
+            if(arr.length <= 1){
+                return arr;
+            }
+            //取数组中间值下标
+            var pivotIndex = Math.floor(arr.length/2);
+            var pivot = arr.splice(pivotIndex, 1)[0];//从数组中找出基准,并将这个数从数组中删除
+            let left = [];
+            let right = [];
+            for(let i = 0; i< arr.length; i++){
+                if(arr[i] < pivot){
+                    left.push(arr[i]);//小于基准的元素，移到基准的左边
+                } else {
+                    right.push(arr[i]);//大于基准的元素，移到基准的右边
+                }
+            }
+            return quickSort(left).concat([pivot], quickSort(right));
+        }
+        var arr1 = [85, 24, 63, 45, 17, 31, 96, 50];
+        console.log(quickSort(arr1));
+    </script>
+</body>
+</html>

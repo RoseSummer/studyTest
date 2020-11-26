@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fn(a, b, c, d,e){
+            console.log(this)
+            console.log(a, b, c, d,e)
+            return 'this is fn'
+        }
+        const fn1 = fn.bind({x:100}, 10, 20, 30, 50, 40)
+        console.log(fn1())
+        Function.prototype.bind1 = function() {
+            //将参数拆解为数组
+            const result = Array.prototype.slice.call(arguments);
+            //获取数组第一项（对象）
+            const a = result.shift();//传递参数第一项
+
+            console.log(a);
+            console.log(result);//剩余项
+            //保存当前this 谁调用指向谁
+            const self = this;
+            console.log(self)//谁调用指向谁
+            //返回新函数
+            return function(){
+                return self.apply(a, result.concat(Array.prototype.slice.call(arguments)))
+            }
+        }
+        console.log(fn.bind1({x:100}, 10, 20, 30,50)(40))
+
+       
+
+       
+    /* 
+    原型链
+        function Foo(name){
+            console.log(5)
+            this.name =name;
+        }
+       Foo.prototype.getName = function(){
+           console.log(rerere)
+       }
+       var foo = new Foo('gffg');
+       console.log(foo.__proto__ === Foo.prototype)
+       console.log(Foo.prototype.__proto__ === Object.prototype)
+       console.log(Object.prototype.__proto__ === null)
+       console.log(Foo.__proto__ === Function.prototype)
+       console.log(Function.prototype.__proto__ === Object.prototype)
+       console.log(Function.__proto__ === Function.prototype) */
+    </script>
+</body>
+</html>

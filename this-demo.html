@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    优先级 new绑定规则 > 显示绑定规则 > 隐式绑定规则 > 默认绑定规则
+    1.默认绑定规则：this 指向window
+        立即执行函数：this指向window  (指向全局对象) 执行环境不同，全局对象不同(浏览器环境，全局对象为window)
+        函数独立调用 this指向window
+    2.隐式绑定规则：谁调用指向谁(隐式消失，参数赋值)
+    3.显示调用：call 第一个参数代表this指向，之后参数单独传递
+        apply第一个参数代表this指向，第二个参数以数组形式传递
+        bind 返回新函数，不直接执行 
+        call,apply,bind 当第一个参数为基础数据类型（字符串，数值，布尔），this指向基础类型的包装类
+        当第一个参数为undefined，null时，this指向window。
+        当函数执行的时候，导致函数被定义，并抛出，形成闭包。
+        父函数是有能力决定子函数的this指向的
+    4.new 绑定规则：this指向实例化对象  当改变return的值为引用值时，this指向return的这个引用值
+    5.箭头函数 ：（自身不存在this） 其中的this为父级作用域的this指向
+    以上对于普通函数的四种绑定规则对箭头函数都无效
+    <script>
+        //this指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象
+       /*  var obj = {
+            count:0,
+            cool: function(){
+                if(this.count <1){
+                    setTimeout(function() {
+                        this.count++;
+                        console.log(this)
+                        console.log("cgfgfgf")
+                    }.bind(this))
+                }
+            }
+        }
+        obj.cool() */
+
+        var a = 0;
+        function foo(){
+            console.log(this);
+        }
+        function bar (fn){
+            fn();
+        }
+        var obj = {
+            a:2,
+            foo:foo
+        }
+       bar(obj.foo) //window
+
+       obj.foo()// { a:2,foo:f}
+       obj.foo.call(1)//Number {1}
+    </script>
+</body>
+</html>

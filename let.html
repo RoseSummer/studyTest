@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+//let 块级作用域，声明的变量只在当前块可以使用
+        
+        let i, a;//i为全局作用域
+        for(let i = 0;i < 10; i++){
+            a = document.createElement('a');
+            a.innerHTML = i +'段落<br>';
+            a.addEventListener("click",function(e){
+                e.preventDefault();
+                console.log(i)//当执行时，循环已经结束，i已经变成10，所以每次执行i都是10
+            })
+            document.body.appendChild(a);
+        }
+
+
+        
+        let a;
+        for(let i = 0;i < 10; i++){//每次循环形成一个独立的块级作用域 i只属于自己的块作用域
+            a = document.createElement('a');
+            a.innerHTML = i +'段落<br>';
+            a.addEventListener("click",function(e){
+                e.preventDefault();
+                console.log(i)
+            })
+            document.body.appendChild(a);
+        }
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1">
+        <p class="test">dfdfdfd</p>
+        <p class="test">ghhghgh</p>
+        <p>ghghghghgh</p>
+        <p>ghghghghgh</p>
+        <a href="">sddssddssds</a>
+        <a href="#">sddssddssds</a>
+        <a href="#">sddssddssds</a>
+        <a href="#">sddssddssds</a>
+        <a href="#">sddssddssds</a>
+        <button id="btn">按钮</button>
+    </div>
+    <div id="div2">
+        <p>dsds</p>
+        <p>mbnbccv</p>
+    </div>
+    <script>
+        const $div1 = document.getElementById('div1')
+        const $div2 = document.getElementById('div2')
+        console.log($div1,$div2)
+        const $p = document.getElementsByTagName('p')
+        console.log($p)
+        const test = document.getElementsByClassName("test")
+        console.log(test)
+        const a = document.createElement("a");
+        a.innerHTML = 'rtrttrt'
+        $div1.appendChild(a)
+        $div1.removeChild($p[0])
+        $div2.appendChild($p[1])
+        $div2.prepend($p[0])
+        
+        function bindEvent(elem, type, selector, fn){
+            if(fn == null){
+                fn = selector;
+                selector = '';
+            }
+            elem.addEventListener(type, event => {
+                const target = event.target;
+                if(!!selector){
+                    //代理绑定
+                    if(target.matches(selector)){
+                        fn.call(target,event)
+                    }
+                }else{
+                    //普通绑定
+                    fn.call(target,event)
+                }
+            })
+        }
+        bindEvent($div1, 'click', function(event){
+            event.preventDefault();
+            const target = event.target;
+            
+            if(target.nodeName === 'A'){
+                console.log(target)
+                console.log(target.innerHTML)
+            }
+            
+        })
+        const btn = document.getElementById('btn')
+        bindEvent(btn, 'click', event => {
+            console.log(event.target)
+        })
+        bindEvent($div1, 'click', 'a', function(event){
+            event.preventDefault();
+            const target = event.target;
+            console.log(target)
+            console.log(target.innerHTML)
+           
+        })
+    </script>
+</body>
+</html>
