@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/todolist.css">
+</head>
+<body>
+    <div class="config" data-config='{
+        "showInput": "j-show-input",
+        "inputWrap": "input-wrap",
+        "inputContent": "input-content",
+        "listContent": "list-content",
+        "addBtn": "add-btn"
+    }'>
+
+    </div>
+    <div class="wrapper">
+        <div class="todolist-title">
+            <div class="todolist-text">ToDoList</div>
+            <a href="javascript:;" class="j-show-input fa fa-plus"></a>
+        </div>
+        <div class="input-wrap">
+            <div class="input-bd">
+                <input type="text" class="input-content">
+            </div>
+            <div class="btn-bd">
+                <button class="add-btn" >增加项目</button>
+            </div>
+        </div>
+        <div class="list-wrap">
+            <ul class="list-content">
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src = ./js/units.js></script>
+    <script type="text/javascript" src="./js/todolist.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //计算实参的和与积
+       /*  function And(){
+            this.sum = 0;
+            this.pro = 1;
+            this.arr = arguments;
+            // console.log(Array.prototype.slice.call(arguments))
+            this.add = function(){
+                console.log(this.arr)
+                for(var i = 0; i < this.arr.length; i++){
+                    this.sum += this.arr[i];
+                }
+                console.log(this.sum);
+            };
+            this.product = function(){
+                for(var i = 0; i < this.arr.length; i++){
+                    this.pro *= this.arr[i];
+                }
+                console.log(this.pro);
+            }
+        }
+        var a = new And(1, 2, 3, 4, 5, 6);
+        a.add();
+        a.product();
+ */
+      /*   function Car(opt){
+            this.brand = opt.brand;
+            this.color = opt.color;
+            this.dis = opt.dis;
+        }
+
+        function Consumer(opt){
+            this.name = opt.name;
+            this.age = opt.age;
+            this.income = opt.income;
+             //方法一 调用selectCar方法时传参
+            // this.selectCar = function(carOpt){
+            //     var myCar = new Car(carOpt);
+            //     console.log(myCar)
+            // };
+           
+             //方法二 调用Consumer方法时传参
+             this.selectCar = function(){
+                var myCar = new Car(opt.carOpt);
+                console.log(myCar)
+            };
+        } */
+
+
+       /*  //方法一的调用时传参方式
+        var people = new Consumer({
+            name: '张三',
+            age: 30,
+            income: 50,
+        });
+        people.selectCar({
+            brand: '兰博基尼',
+            color: '红色',
+            dis: '2000'
+        })
+ */
+
+
+       /*   //方法二的调用时传参方式
+        var people = new Consumer({
+            name: '张三',
+            age: 30,
+            income: 50,
+            carOpt: {
+                brand: '兰博基尼',
+                color: '红色',
+                dis: '2000'
+            }
+        });
+        people.selectCar(); 
+ */
+
+
+       /*  console.log(people) */
+
+      /*  
+        function test(){
+            var obj = {
+                name: 'dsdf'
+            }
+            return obj;
+        }
+        var obj1 = test();
+        console.log(obj1)
+        obj1.name = 'eeee';
+        console.log(obj1.name) */
+
+
+        //计算输入字符串的总字节数
+        //方法一
+        /* var strs = prompt("输入一个字符串");
+        function FindByte(strs){
+            this.byte = function(){
+                var sum = 0;
+                for(var i = 0; i < strs.length; i++){
+                    var n = strs.charCodeAt([i])
+                    if(n <= 255){
+                        sum += 1;
+                    }else{
+                        sum += 2;
+                    }
+                } 
+                console.log(sum)
+            }
+        }
+        var findByte = new FindByte(strs);
+        findByte.byte(); */
+
+
+       /*  //方法二，只判断码数大于255的字符
+        var strs = prompt("输入一个字符串");
+        function FindByte(strs){
+            this.byte = function(){
+                var sum = strs.length;
+                for(var i = 0; i < strs.length; i++){
+                    var n = strs.charCodeAt([i])
+                    if(n > 255){
+                        sum ++;
+                    }
+                } 
+                console.log(sum)
+            }
+        }
+        var findByte = new FindByte(strs);
+        findByte.byte(); */
+
+
+        function Car(opt){
+            console.log(opt)
+            this.brand = opt.brand;
+            this.color = opt.color;
+            this.dis = opt.dis;
+        }
+
+        function Consumer(opt){
+            console.log(opt)
+            //Car.call(this,opt.carOpt)
+            Car.apply(this,[opt.carOpt])
+            this.name = opt.name;
+            this.age = opt.age;
+            this.income = opt.income;
+            this.selectCar = function(){
+                console.log('年纪'+this.age+'岁，收入'+this.income+'的'+this.name +'买了一辆排量为'+this.dis+'，颜色为'+this.color+'的'+this.brand+'的车')
+            };
+        }
+
+        var consumer = new Consumer({
+            name: '张三',
+            age: 30,
+            income: 50,
+            carOpt: {
+                brand: '兰博基尼',
+                color: '红色',
+                dis: '2000'
+            }
+        })
+        console.log(consumer)
+        consumer.selectCar()
+    </script>
+</body>
+</html>

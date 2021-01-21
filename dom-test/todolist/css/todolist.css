@@ -1,0 +1,55 @@
+.todo{
+    width: 500px;
+    margin: 0 auto;
+    border: 1px solid #444;
+}
+.todo-title{
+    height: 40px;
+    line-height: 40px;
+    background: #2C2255;
+    color: #fff;
+    text-align: center;
+}
+.todo-main{
+    border: 1px solid #444;
+    padding: 10px;
+    
+  
+}
+.main-input{
+   font-size: 0;
+   text-align: center;
+}
+.main-input input{
+    height: 35px;
+    width: 360px;
+    border: 1px solid #aaa;
+}
+.main-input button{
+    width: 80px;
+    box-sizing: content-box;
+}
+.main-list{
+    margin-top:10px;
+    
+}
+.main-list .list-item{
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    
+}
+.main-list .list-item span{
+    font-size: 22px;
+}
+.list-item button{
+    position: absolute;
+    width: 60px;
+    
+}
+.list-item .edit-btn{
+    right: 80px;
+}
+.list-item .delete-btn{
+    right: 10px;
+}

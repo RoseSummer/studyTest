@@ -1,0 +1,32 @@
+.recomme-data{
+    display: none;
+}
+.input-wrap{
+    position: relative;
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    margin: 30px auto;
+}
+.search{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ddd;
+    background: transparent;
+}
+.recomme{
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    z-index: -1;
+    font-size: 14px;
+    color: #989898;
+}
+.recomme.show{
+    display: block;
+    color: #989898;
+}
+.recomme.hide{
+    display: none;
+    color: #ccc;
+}

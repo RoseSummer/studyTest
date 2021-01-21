@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        body, ul , li, div{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        .swiper-box{
+            position: relative;
+            height: 284px;
+            width: 520px;
+            overflow: hidden;
+        }
+        .swiper-list{
+            width: 2620px;
+            height: 100%;
+            position: relative;
+            /* 解决inline-block间隙 */
+            display: table;
+            word-spacing: -1em; 
+        }
+        .swiper-item{
+            /* position: absolute;
+            top: 0; */
+             display: inline-block;  /*元素间有间隙 */
+        }
+        .btns{
+            position: absolute;
+            top: 40%;
+            width: 100%;
+        }
+        .pre-btn,
+        .next-btn{
+            position: absolute;
+        }
+        .pre-btn{
+            left: 20px;
+        }
+        .next-btn{
+            right: 20px;
+        } 
+    </style>
+</head>
+<body>
+    <div class="swiper-box">
+        <ul class="swiper-list">
+            <li class="swiper-item">
+                <a href="javascript:;" class="item-link">
+                    <img src="./images/1.jpg" alt="" class="item-pic">
+                </a>
+            </li>
+            <li class="swiper-item">
+                <a href="javascript:;" class="item-link">
+                    <img src="./images/2.jpg" alt="" class="item-pic">
+                </a>
+            </li>
+            <li class="swiper-item">
+                <a href="javascript:;" class="item-link">
+                    <img src="./images/3.jpg" alt="" class="item-pic">
+                </a>
+            </li>
+            <li class="swiper-item">
+                <a href="javascript:;" class="item-link">
+                    <img src="./images/4.jpg" alt="" class="item-pic">
+                </a>
+            </li>
+            <li class="swiper-item">
+                <a href="javascript:;" class="item-link">
+                    <img src="./images/5.jpg" alt="" class="item-pic">
+                </a>
+            </li>
+        </ul>
+        <div class="btns">
+            <button class="pre-btn">上一页</button>
+            <button class="next-btn">下一页</button>
+        </div>
+    </div>
+    <script>
+        // 绑定事件兼容函数
+        function addEvent(type, elem, fn){
+            if(elem.addEventListener){
+                return elem.addEventListener(type, fn , false)
+            }else if(elem.attachEvent){
+                return elem.attachEvent('on' + type, function(){
+                    handle.call(elem);
+                })
+            }else{
+                elem['on' + type] = fn;
+            }
+        }
+
+        // 获取元素兼容函数
+        function getStyle(elem, prop){
+            if(window.getComputedStyle){
+                if(!!prop){
+                    return window.getComputedStyle(elem, null)[prop];
+                }else{
+                    return window.getComputedStyle(elem, null);
+                }
+                
+            }else{
+                if(!!prop){
+                    return elem.currentStyle[prop];
+                }else{
+                    return elem.currentStyle;
+                }
+            }
+        }
+        var preBtn = document.getElementsByClassName('pre-btn')[0],
+            nextBtn = document.getElementsByClassName('next-btn')[0],
+            swiperItem = document.getElementsByClassName('swiper-item'),
+            item = swiperItem[0],
+            len = swiperItem.length,
+            swiperList = document.getElementsByClassName('swiper-list')[0],
+            count = 1,
+            num = len-1;
+            
+            addEvent('click', preBtn, function(){
+                var  widItem = parseInt(getStyle(item, 'width'));
+               
+                console.log(num, len)
+                if(num >= 0){
+                    swiperList.style.left = -num * widItem + 'px';
+                }else{
+                    console.log(num)
+                    num = len-1;
+                    swiperList.style.left = -num * widItem + 'px';
+                }
+                num--;
+                console.log(num)
+            })
+            addEvent('click', nextBtn, function(){
+                var  widItem = parseInt(getStyle(item, 'width'));
+                if(count < len){
+                    swiperList.style.left = -count * widItem + 'px';
+                }else{
+                    count = 0;
+                    swiperList.style.left = -count * widItem + 'px';
+                }
+                count++;
+                //console.log(count)
+            })
+
+
+           
+    </script>
+</body>
+</html>

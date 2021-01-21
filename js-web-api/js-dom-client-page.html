@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            height: 2000px;
+        }
+        .box{
+            position: absolute;
+            top: 200px;
+            left: 200px;
+            width: 300px;
+            height: 300px;
+            background: orange;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="box"></div>
+    </div>
+    
+    <script>
+        //e.clientY 鼠标相对于可视区域的位置（不包含滚动条）
+
+        //e.pageY  鼠标相对于文档的位置（包含滚动条）, 相同与 layerY
+        
+        //e.y 相同与clientY
+
+        //e.screenY 相对于屏幕的位置
+
+        //e.offsetX e.offsetY 相对于块元素左上角的位置
+        var box = document.getElementsByClassName('box')[0];
+        document.onclick = function(e){
+            var e = e || window.event;
+            console.log(e.clientY, e.pageY, e.screenY);
+        }
+
+        box.onclick = function(e){
+            var e = e || window.event;
+            console.log(e.offsetX, e.offsetY);
+        }
+    </script>
+</body>
+</html>

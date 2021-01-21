@@ -1,0 +1,69 @@
+.box{
+    position: fixed; 
+    top: 0; 
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    background: orange;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+}
+.box h2{
+    font-size: 16px;
+    
+}
+.content{
+    margin-top: 44px;
+}
+.bk-list .list-item{
+    height: 150px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+.bk-list .list-item .item-lk{
+    display: block;
+    height: 100%;
+
+}
+.bk-list .list-item .bk-pic{
+    width: 120px;
+    height: 150px;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;  
+     /* 怪异盒模型  content = width + padding +border */
+}
+.item-info{
+    margin-left: 120px;
+    height: 100%;
+    color: #424242;
+}
+.item-info h2,.item-info p{
+    padding-top: 10px;
+}
+.item-info p{
+    color: #666;
+}
+.item-info .info-desc{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #999;
+}
+.come-back{
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    padding: 30px 10px;
+    border-radius: 50%;
+    background: #FFCE44;
+    color: #fff;
+    opacity: .6;
+    display: none;
+}
+a:hover{
+    opacity: 1;
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span></span>
+    <a href="rrer"></a>
+    <div>
+        <ul>
+            <li>
+                <p>
+                    <a href="">
+
+                    </a>
+                </p>
+            </li>
+        </ul>
+        <p></p>
+        <a href=""></a>
+        <span></span>
+    </div>
+    <div></div>
+    <p></p>
+    <span></span>
+    <script>
+        //在原型上编程，遍历任意一个父元素，找到他的子节点元素，传参就对应子元素，不传参就是所有
+        Element.prototype.findElement = function(num){
+            var childs =  this.childNodes,
+                len = childs.length,
+                item,
+                type = typeof(num),
+                arr = {
+                    'length': 0,
+                    'push': Array.prototype.push,
+                    'splice': Array.prototype.splice
+                };
+
+            for(var i = 0; i < len; i++){
+                item = childs[i];
+                if(item.nodeType === 1){
+                    arr.push(item);
+                }
+            }
+            if(num !== undefined && type !== 'number'){
+                return undefined;
+            }
+            var res = num === undefined ? arr : arr[num];
+            return res;
+        }
+        var div = document.getElementsByTagName('div')[0];
+        console.log(div.findElement());
+        console.log(div.findElement(0));
+
+
+        //在原型上编程，找出一个元素的第n层父级元素。
+        Element.prototype.findParents = function(num){
+            var element = this,
+                type = typeof(num);
+            if(type === 'undefined' ){
+                return element.parentNode;
+            }else if(num < 0 || type !== 'number'){
+                return undefined;
+            }
+           
+            for(var i = num; i > 0 ; i--){
+                console.log(element.nodeName)
+                if(element.nodeName === 'HTML'){
+                    return null;
+                }
+                element = element.parentNode;
+            }
+           
+            return element;
+        }
+        var a = document.getElementsByTagName('a')[0];
+        console.log(a.findParents())
+        console.log(a.findParents(3))
+
+
+        //hasChildren  判断父元素是否有子元素节点
+        Node.prototype.hasChildren = function(){
+            var childs = this.childNodes,
+            item;
+            for(var i = 0; i< childs.length; i++){
+                item = childs[i];
+                if(item.nodeType === 1){ //遇到一个就直接退出，后面不再执行
+                    return true;
+                }
+            }
+            return false;  //知道循环结束都没有符合条件的
+        }
+        console.log(div.hasChildren())
+
+
+        // 寻找兄弟元素节点，
+        // 如果参数为正数，找之后的兄弟节点，
+        // 如果参数为负数，找之前的兄弟节点
+        //如果参数为0，找自己
+        Element.prototype.findSibling = function(n){
+            var element = this;
+            /* 方法一
+            if(num > 0){
+                for(var i = n; i < 0; i--){
+                    element = element.nextElementSibling;
+                }
+            }else{
+                for(var i = n; i < 0; i++){
+                    element = element.previousElementSibling;
+                }
+            } */
+
+         /*    方法二
+         for(var i = n; i < 0; ){
+                if(n > 0){
+                    element = element.nextElementSibling;
+                    i--;
+                }else if(n < 0){
+                    element = element.previousElementSibling;
+                    i++;
+                }    
+            } */
+            /* 方法三  兼容性
+            while(n){
+                if(n > 0){
+                    if(element.nextElementSibling){
+                        element = element.nextElementSibling;
+                    }else{
+                        for(element = element.nextSibling; element && element.nodeType !== 1; element = element.nextSibling);
+                    }
+                    n--;
+                }else if(n < 0){
+                    if(element.nextElementSibling){
+                        element = element.previousElementSibling;
+                    }else{
+                        for(element = element.previousSibling; element && element.nodeType !== 1; element = element.previousSibling);
+                    }
+                    n++;
+                }    
+            }
+         */
+
+            //方法四  兼容性 性能 推荐写法
+            while(n){
+                if(n > 0){
+                    element = element.nextSibling; 
+                    while(element && element.nodeType !== 1){
+                        element = element.nextSibling
+                    }
+                    n--;
+                }else if(n < 0){
+                    element = element.previousSibling
+                    while(element && element.nodeType !== 1){
+                        element = element.previousSibling
+                    }
+                    n++;
+                }    
+            }
+        
+            return element;
+        }
+        console.log(div.findSibling())
+        console.log(div.findSibling(4))
+        console.log(div.findSibling(-1))
+
+/* 
+        var box = document.createElement('div'),
+            oUl = document.createElement('ul'),
+            oFrag = document.createDocumentFragment();
+        box.id = 'box';
+        oUl.className = 'list';
+        for(var i = 0;i < 5; i++){
+            var oLi = document.createElement('li');
+            oLi.className = 'list-item';
+            oLi.innerText= i + 1;
+            oFrag.appendChild(oLi)
+        }
+        oUl.appendChild(oFrag);
+        box.appendChild(oUl);
+        document.body.appendChild(box); */
+
+
+        Element.prototype.findAllElement = function(){
+            var element = this,
+                childs =  element.childNodes,
+                len = childs.length,
+                item ;
+            if(element && element.nodeType === 1){
+                console.log(element);
+            }
+            for(var i = 0; i < len; i++){
+                item = childs[i]
+                if(item.nodeType === 1){
+                    item.findAllElement();//递归  调用函数本身 把自己的内容完全再执行一下，直到完全执行结束，根据条件跳出  
+                    //没有子元素节点时不再递归 
+                }
+            }
+           
+        }
+        console.log(div.findAllElement())
+
+
+        Element.prototype.insertAfter = function(target, origin){
+            var element = this;
+            if(!!origin.nextElementSibling){
+                element.insertBefore(target, origin.nextElementSibling)
+            }else{
+                origin.parentNode.appendChild(target)
+            }
+        }
+        var p = div.getElementsByTagName('p')[1];
+        console.log(div.insertAfter(a, p))
+    </script>
+</body>
+</html>

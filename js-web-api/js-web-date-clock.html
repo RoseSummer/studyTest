@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>
+
+    </h2>
+    <script>
+        Date.prototype.clock = function(){
+            var year = this.getFullYear(),
+                month = this.getMonth() + 1,
+                day = this.getDate(),
+                hours = this.getHours(),
+                minutes = this.getMinutes(),
+                seconds = this.getSeconds();
+                //个位数前面都加上0
+                function setZero(num){
+                    num = num < 10 ? '0' + num : num;
+                    return num;
+                }
+                var res = year + '-' +setZero(month) + '-' + setZero(day) + ' ' + setZero(hours) + ':' + setZero(minutes) + ':' + setZero(seconds);
+                return res;
+        }
+        var oH2 = document.getElementsByTagName('h2')[0];
+        setInterval(function(){
+            oH2.innerHTML = new Date().clock();
+        }, 1000)
+    </script>
+</body>
+</html>

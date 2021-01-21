@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+
+        原型，原型链，继承
+    </div>
+    <script>
+          /* 不重写Prefessor.prototype的时候,Prefessor.prototype.constructor指向构造函数(Prefessor)
+        Prefessoe.prototype ={}的时候,Prefessor.prototype.constructor指向Object */
+
+        function Prefessor(){
+            this.name = 'wang';
+            this.tSkill = 'javascript';
+            this.a = {
+                b: 1,
+                c: 2
+            }
+            console.log(this)
+        }
+        Prefessor.prototype.age = 50;
+        Prefessor.prototype.skill = {
+            name: 'html',
+            title: 'gfgf'
+        }
+        // Prefessor.prototype = {};
+        var prefessor = new Prefessor();
+        console.log(Prefessor.prototype.constructor,prefessor.constructor)
+        //所有的对象都有原型，包括原型本身，至此形成的链条称为原型链。
+        //直到Object.prototype.__proto__为null.
+        //实例(实例化后的对象)的原型__proto__属性，实际放的是构造函数的原型(Prefessor.prototype)
+        
+        /* 原型链继承：
+            ,
+        存在引用值共享问题，之后通过Teacher实例化的对象,
+        实例化对象的原型是相同的，因为原型都是同一个new Prefessor()构造出来的，
+        （创建的两个实例，引用值拷贝的是地址，地址相同，所以修改一个就都修改了） 
+        */
+       
+        function Teacher(){
+            this.name = 'li';
+            this.mSkill = 'html';
+             this.test = {
+                x: 1,
+                y: 2
+            } 
+        }
+        Teacher.prototype = new Prefessor();
+        var teacher = new Teacher();
+        var teacher1 = new Teacher();
+       
+        console.log(Prefessor.prototype.__proto__ === Object.prototype)
+        Teacher.prototype.skill.name = 'wee'
+        teacher.a.b =10;
+        teacher.name = 'rrr'
+        console.log(teacher,teacher1)
+        
+       
+
+       /*  //构造函数继承(call,apply继承，改变this指向)
+            解决了引用值共享问题
+            通过call，apply改变this指向实现继承，
+            只继承了原型的属性和方法，并没有集成实例对象原型的属性和方法
+        */
+        function Student(){
+            Teacher.call(this) //改变this指向为实例对象 this ->student实例对象
+            this.lSkill = 'css'
+        }
+        Student.prototype = {
+
+        }
+        var student = new Student();
+        student.test.x = 100;
+        console.log(student)
+
+
+        //组合继承（原型链+构造函数）
+        //调用两次构造函数
+       /*  function Father(){
+            this.name = 'weew';
+            this.test = {
+                x: 10,
+                y: 20
+            }
+            //console.log(this);
+        }
+        Father.prototype = {
+            constructor: Father
+        }
+        var father = new Father();
+        console.log(father)
+        function Son(){
+            Father.call(this);
+            this.age = 18;
+        }
+        Son.prototype = father;
+        var son = new Son();
+        console.log(son)
+        son.test.y =200; 
+ */
+ 
+ /*        //寄生组合继承
+        function Father(){
+            this.name = 'weew';
+            this.test = {
+                x: 10,
+                y: 20
+            }
+            console.log(this);
+        }
+        Father.prototype = {
+            constructor: Father,
+            a:{
+                x: 10,
+                y: 20
+            }
+        }
+        var father = new Father();
+        console.log(father)
+        function Son(){
+            Father.call(this);
+            this.age = 18;
+        }
+        Son.prototype = Object.create(Father.prototype);
+        var son = new Son();
+        console.log(son)
+        son.test.y =200;
+        son.a.x =100; */
+
+ 
+        //圣杯模式
+        function Father(){
+            this.name = 'weew';
+            this.test = {
+                x: 10,
+                y: 20
+            }
+            //console.log(this);
+        }
+        Father.prototype = {
+            constructor: Father,
+             a:{
+                x: 10,
+                y: 20
+            }, 
+            b: function(){
+                console.log(this.a)
+            }
+        }
+        Father.prototype.a ={
+            x: 10,
+            y: 20
+        }
+        var father = new Father();
+        console.log(father) 
+
+         function Buffer(){}
+        Buffer.prototype = Father.prototype;
+        var buffer = new Buffer(); 
+
+    /*   //圣杯模式 中间层 普通函数封装
+        function inherit(Origin, Target){
+            function Buffer(){}
+            Buffer.prototype = Origin.prototype;
+            Target.prototype = new Buffer();
+            Target.prototype.constructor = Target;
+            Target.prototype.superClass = Origin;
+        } */
+       /*  //闭包
+        var inherit = (function (){
+            var Buffer = function(){}
+            return function(Origin, Target){
+                Buffer.prototype = Origin.prototype;
+                Target.prototype = new Buffer();
+                Target.prototype.constructor = Target;//constructor 指向自身
+                Target.prototype.uber = Origin; //说明继承自哪里
+            }
+        })()
+    */
+        /*  inherit(Father,Son) */
+        function Son(){
+            // Father.call(this);
+            this.age = 18;
+        }
+        
+        var son = new Son();
+        console.log(son)
+        //Son.prototype.a.x=100;
+
+        
+     
+
+    </script>
+</body>
+</html>

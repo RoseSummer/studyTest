@@ -1,0 +1,27 @@
+.main-content{
+    line-height: 30px;
+    margin-top: 44px;
+    color: #424242;
+}
+.s-top-btn,
+.play-btn{
+    position: fixed;
+    right: 25px;
+    padding: 30px 10px;
+    border-radius: 50%;
+    background: #FFCE44;
+    color: #fff;
+    opacity: .7;
+    
+}
+.s-top-btn{
+    bottom: 120px;
+    display: none; 
+}
+.play-btn {
+    bottom: 25px;
+}
+.s-top-btn:hover,
+.play-btn:hover{
+    opacity: 1;
+}

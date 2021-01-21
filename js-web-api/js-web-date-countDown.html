@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2></h2>
+    <script>
+        Date.prototype.countDown = function(endTime,timer){
+            endTime = new Date(endTime).getTime();
+            var startTime = this.getTime(),
+            diffTime = endTime - startTime,
+            day, hours, minutes, seconds;
+            if(diffTime > 0){
+                day = Math.floor(diffTime / 1000 / 60 / 60 / 24);
+                hours = Math.floor(diffTime / 1000 / 60 / 60 % 24);
+                minutes = Math.floor(diffTime / 1000 / 60 % 60);
+                seconds = Math.floor(diffTime / 1000 % 60);
+            }else{
+                clearInterval(timer)
+                return 0;
+            }
+            
+            function setZero(num){
+                num = num < 10 ? '0' + num : num;
+                return num;
+            }
+            return day + '天' + hours + '小时' +minutes + '分钟' + seconds + '秒';
+        }
+        var oH2 = document.getElementsByTagName('h2')[0];
+        var time = setInterval(function(){
+            oH2.innerHTML = new Date().countDown('2020-12-24 9:40:00', time);
+            //oH2.innerHTML = new Date().countDown('2020-12-28 9:37:00', time);
+        }, 1000)
+       
+    </script>
+</body>
+</html>

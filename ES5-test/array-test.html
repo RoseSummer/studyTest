@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var data = [{
+            "id": "1",
+            "name": "dfddf",
+            "title": "qwqwe",
+            "sex": "男",
+            "age": "23"
+        },
+        {
+            "id": "2",
+            "name": "fggfg",
+            "title": "kjkjkj",
+            "sex": "女",
+            "age": "28"
+        },
+        {
+            "id": "3",
+            "name": "bbnbbn",
+            "title": "assasas",
+            "sex": "男",
+            "age": "23"
+        }]
+
+        //深拷贝
+        function deepClone(org, tar){
+            var tar = tar || {},
+                type = typeof(org),
+                toStr = Object.prototype.toString;
+            for(var key in org){
+                if(org.hasOwnProperty(key)){
+                    if(org[key] !== null && typeof(org[key]) === 'object'){
+                        if(toStr.call(org[key]) === '[object Array]'){
+                            tar[key] = [];
+                        }else{
+                            tar[key] = {};
+                        }
+                        deepClone(org[key], tar[key]);
+                    }else{
+                        tar[key] = org[key];
+                    }
+                }
+                
+            }
+            return tar;
+        }
+        //console.log(deepClone(data, []))
+
+        //forEach重写  forEach第一个参数为回调函数，第二个参数用来表示this指向
+        Array.prototype.myForEach = function(fn){
+            var arr = this,
+                len = arr.length,
+                arg2 = arguments[1] || window;
+                for(var i = 0; i < len; i++){
+                    fn.apply(arg2, [arr[i], i, arr])
+                }
+        }
+       
+        //filter重写  filter有返回值，返回新的数组，数组里面元素要进行深拷贝
+        Array.prototype.myFilter = function(fn){
+            var arr = this,
+                len = arr.length,
+                arg2 = arguments[1] || window,
+                newArr = [],
+                item;
+                for(var i = 0; i< len; i++){
+                    item = arr[i];
+                    if(!!fn.apply(arg2, [arr[i], i, arr])){
+                        
+                        newArr.push(deepClone(item));
+                    }
+                }
+                return newArr;
+        }
+
+        //map重写  有返回值 映射
+        Array.prototype.myMap = function(fn){
+            var arr = this,
+                len = arr.length,
+                arg2 = arguments[1] || window,
+                newArr = [],
+                item;
+            for(var i = 0; i < len; i++){
+                item = deepClone(arr[i]);
+                newArr.push(fn.apply(arg2, [item, i, arr]));
+            }
+            return newArr;
+        }
+        
+        Array.prototype.myEvery = function(fn){
+            var arr = this,
+                len = arr.length,
+                arg2 = arguments[1] || window;
+
+            for(var i = 0; i < len; i++){
+                if(!fn.apply(arg2, [arr[i], i , arr])){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        var arr = data.myEvery(function(elem){
+
+            return elem.age < 28;
+        },{name: 'dddfd'})
+        console.log(arr)
+        Array.prototype.mySome = function(fn){
+            var arr = this,
+                len = arr.length,
+                arg2 = arguments[1] || window;
+
+            for(var i = 0; i < len; i++){
+                if(fn.apply(arg2, [arr[i], i , arr])){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        var arr1 = data.mySome(function(elem){
+            console.log(elem.age)
+            return elem.age < '28';
+        },{name: 'dddfd'})
+        console.log(arr1)
+
+        Array.prototype.myReduce = function(fn, initValue){
+            var arr = this,
+                len = arr.length,
+                arg3 = arguments[2] || window;
+                for(var i = 0; i < len; i++){
+                    initValue = fn.apply(arg3, [initValue, arr[i], i, arr])
+                }
+                return initValue;
+        }
+        Array.prototype.myReduceRight = function(fn, initValue){
+            var arr = this,
+                len = arr.length,
+                arg3 = arguments[2] || window;
+                for(var i = len-1; i >= 0; i--){
+                    initValue = fn.apply(arg3, [initValue, arr[i], i, arr])
+                }
+                return initValue;
+        }
+        var initValue = [];
+        var arr2 = data.myReduceRight(function(prev, elem, i, arr){
+            console.log(prev)
+            console.log(elem)
+            prev.push({
+                s: elem.id
+            })
+            return prev;
+        }, initValue)
+        console.log(arr2);
+    </script>
+</body>
+</html>

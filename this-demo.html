@@ -37,21 +37,29 @@
         }
         obj.cool() */
 
-        var a = 0;
-        function foo(){
-            console.log(this);
-        }
-        function bar (fn){
-            fn();
-        }
-        var obj = {
-            a:2,
-            foo:foo
-        }
-       bar(obj.foo) //window
+    //     var a = 0;
+    //     function foo(){
+    //         console.log(this);
+    //     }
+    //     function bar (fn){
+    //         fn();
+    //     }
+    //     var obj = {
+    //         a:2,
+    //         foo:foo
+    //     }
+    //    bar(obj.foo) //window
 
-       obj.foo()// { a:2,foo:f}
-       obj.foo.call(1)//Number {1}
+    //    obj.foo()// { a:2,foo:f}
+    //    obj.foo.call(1)//Number {1}
+
+
+     'use strict'
+    
+  ;(function a(){
+        console.log(this) //undefined
+    })()
+    
     </script>
 </body>
 </html>

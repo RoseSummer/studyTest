@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    预编译
+
+    1.通篇检查语法错误
+
+    2.预编译的过程
+
+    3.解释一行执行一行
+
+
+   
+    <script>
+/* 
+        console.log(q);
+        console.log(q)；
+        console.log(q)
+        先报语法错误
+ */
+
+/* 
+    'use strict'
+    b = 2; //严格模式下报错
+*/
+
+ /* 
+    //AO activation object 活跃对象 ，函数上下文
+        // 1.寻找形参和变量声明
+        // 2.实参值赋值给形参
+        // 3.找函数声明，给变量赋值
+        // 4.执行函数 
+    
+
+    function test1(a){
+        console.log(a);
+        var a = 1;
+        console.log(a);
+        // var a = function(){}
+         function a(){
+
+        } 
+        console.log(a);
+        var b = function(){
+
+        }
+        console.log(b);
+        function d(){
+
+        }
+    }
+    test1(2) 
+    
+    console.log(a);
+    function a(a){
+        console.log(a)
+        var a = 10;
+        console.log(a);
+        var a = function(){
+
+        }
+        console.log(a)
+    }
+    a(2)
+    var a = 1;
+    console.log(a)//1
+    //a(2);报错
+
+*/
+
+
+/* 
+    //函数声明整体提升，变量只有声明提升，赋值是不提升的
+    console.log(test)//test函数
+    function test(){
+        console.log(1)
+    }
+
+    console.log(a)//undefined
+    var a = 10; //两个步骤：1.变量声明 2.变量赋值
+ */
+        /* 
+        
+        var drinks = prompt("请输入饮料名称");
+        function f1(drink){
+        switch(drink){
+            case '红茶':
+            return '红茶是3.5元';
+            case '绿茶':
+            return '绿茶是4.5元';
+            default:
+            return '其他是5元';
+        }
+        }
+        console.log(f1(drinks)) */
+
+        /* 
+        
+        var num1 = Number(prompt("请输入第一个数"));
+        var symbol = prompt("请输入运算符号");
+        var num2 =  Number(prompt("请输入第二个数"));
+        console.log(typeof symbol)
+        function f2(x, y, z){
+            switch(y){
+                case '+':
+                return x + z;
+                case '-':
+                return x - z;
+                case '*':
+                return x * z;
+                case '/':
+                return x / z;
+                case '%':
+                return x % z;
+                default:
+                return '请输入正确运算符';
+            
+            }
+        }
+        console.log(f2(num1, symbol, num2)) */
+
+
+   /*   
+        //求阶乘  n! == n * (n-1)!
+        var n = parseInt(prompt("请输入一个数"));
+        //方法一
+        function f3(n, sum){
+            sum = sum *n;
+            if(n === 1){
+                return sum;
+            }
+            return f3(n-1, sum);   
+        }
+        console.log(f3(n, 1));  
+
+
+        //方法二
+        function f31(n){
+            if(n <= 0){
+                return;
+            }
+            if(n === 1){
+                return 1;
+            }
+            return n * f31(n-1);   
+        }
+        console.log(f31(n))
+ */
+
+
+/* 
+    求斐波那契数列
+    var n = parseInt(prompt("请输入一个数"));
+
+    function f4(n){
+        if(n <= 2){
+            return 1;
+        }
+        return f4(n-1) + f4(n-2);
+    }
+    console.log(f4(n))
+ */
+
+    var initAdd = (function(){
+        var arr = [];
+        var a =  function(num){
+            if(num % 3 == 0 || num % 5 == 0 || num % 7 == 0){
+                arr.push(num);
+            }
+            if(num == 1){
+                return arr
+            }
+            return a(--num)
+        }
+        return a;
+    })()
+
+    var initFib = (function(){
+        var fib = function(n){
+            if(n <= 0){
+                return 0;
+            }
+            if(n <= 2){
+                return 1;
+            }
+            return fib(n-1) + fib(n-2);
+        }
+        return fib;
+    })()
+
+    var initPlus = (function(){
+        function plus(n){
+            if(n == 0){
+                return 0;
+            }
+            console.log(n)
+            return n + plus(--n)
+        }
+        return plus;
+    })()
+    window.onload = function(){
+        //console.log(initAdd(100));
+        //console.log(initFib(6))
+        console.log(initPlus(5))
+    }
+
+    //  var a = Number(prompt('请输入年份'));
+    //  a = a %400 === 0  || (a % 4 === 0  && a % 100 !== 0 )? '闰年':'不是闰年'
+    //             console.log(a)
+
+    //重写 unshift
+    var arr = [1, 2, 3, 4, 56, 78];
+    Array.prototype.myUnshift = function(){
+       
+        
+       /*  //方法一：
+       for(var i = 0; i < arguments.length; i++){
+            this.splice(i, 0, arguments[i])
+        }
+        return this.length; */
+        //方法二：
+        var arg = Array.prototype.slice.call(arguments);
+        console.log(arg)
+        arr = arg.concat(arr)
+        return this.length;
+    }
+    arr.myUnshift(4, 5, 6)
+    console.log(arr)
+
+    //根据字节总数给数组排序
+    var arr1 = ['我爱你', 'OK', 'Hello', '你说WHAT', '可以'];
+    function byYate(str){
+        var num = str.length
+        for(var i = 0; i< str.length; i++){
+            if(str[i].charCodeAt() > 255){
+                num++;
+            }
+        }
+        return num;
+    }
+
+    arr1.sort(function(a, b){
+        return byYate(a) -byYate(b);
+    })
+    console.log(arr1)
+
+
+    //数组去重方法  indexOf
+    var arr2 = [56,100,78,90,88,56,45,90,100];
+    Array.prototype.unique = function(){
+        var obj = {},
+            newArr = [];
+        for(var i = 0; i < this.length; i++){
+            if(!obj[this[i]]){ // !obj.hasOwnProperty(this[i])
+                obj[this[i]] = this[i] ;
+                newArr.push(this[i])
+            }
+        }
+        return newArr; 
+    }
+    console.log(arr2.unique())
+        //indexOf去重  存在兼容问题
+        // var nArr = [];
+        // for(var i = 0; i < arr2.length; i++){
+        //     if(nArr.indexOf(arr2[i]) === -1){
+        //         nArr.push(arr2[i])
+        //     }
+        // }
+        // console.log(nArr)
+
+        Array.prototype.distinct = function(){
+            var arr = this,
+            result = [],
+            i,
+            j,
+            len = arr.length;
+            for(i = 0; i < len; i++){
+                for(j = i + 1; j < len; j++){
+                    console.log(i, j)
+                    if(arr[i] === arr[j]){
+                        j = ++i;
+                        
+                    }
+                }
+                result.push(arr[i]);
+            }
+            return result;
+        }
+            var arra = [1,2,3,4,4,1,1,2,1,1,1];
+            console.log(arra.distinct());    //返回[3,4,2,1]
+
+
+            Array.prototype.distinct1 = function (){
+ var arr = this,
+  i,
+  j,
+  len = arr.length;
+ for(i = 0; i < len; i++){
+  for(j = i + 1; j < len; j++){
+   if(arr[i] == arr[j]){
+    arr.splice(j,1);
+    len--;
+    j--;
+   
+   }
+  }
+ }
+ return arr;
+};
+var a = [1,2,3,4,5,6,5,3,2,4,56,4,1,2,1,1,1,1,1,1,];
+var b = a.distinct1();
+console.log(b.toString()); //1,2,3,4,5,6,56
+
+    //字符串去重
+    var str = '11ddffgghh';
+    String.prototype.unique = function(){
+        var obj = {},
+            newStr = '';
+            console.log(this.length)
+        for(var i = 0; i < this.length; i++){
+            if(!obj[this[i]]){ // !obj.hasOwnProperty(this[i])
+                obj[this[i]] = this[i] ;
+                newStr += this[i]
+            }
+        }
+        return newStr; 
+    }
+    console.log(str.unique())
+
+
+    //封装typeof
+    function myTypeof(val){
+       var type = typeof(val);
+       var toStr = Object.prototype.toString;
+       var res = {
+        '[object Object]' : 'object',
+        '[object Array]' : 'array',
+        '[object Number]' : 'object Number',
+        '[object Boolean]' : 'object Boolean',
+        '[object String]' : 'object String'
+       };
+        if(val === null){
+            return 'null';
+        }else if(type === 'object'){
+            var ret = toStr.call(val);
+            return res[ret];
+        }else{
+            return type;
+        }
+       
+    }
+    var obj = {a:[1,2,3]}
+    console.log(myTypeof(new Number()))
+    </script>
+</body>
+</html>

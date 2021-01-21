@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        body, div, ul, li{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        .wrapper{
+            width: 160px;
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+            color: #424242;
+        }
+        .wrapper-menu{
+            background: #2E83B7;
+        }
+        .wrapper ul{
+            height: 0;
+            overflow: hidden;
+        }
+        /* .wrapper:hover ul{
+            display: block;
+        } */
+       
+        .wrapper li{
+            height: 40px;
+            line-height: 40px;
+            background: #21A3F1;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrapper-menu">下拉菜单</div>
+        <ul class="wrapper-ul">
+            <li>
+                <a href="javascript:;">第1个项目</a>
+            </li>
+            <li>
+                <a href="javascript:;">第2个项目</a>
+            </li>
+            <li>
+                <a href="javascript:;">第3个项目</a>
+            </li>
+            <li>
+                <a href="javascript:;">第4个项目</a>
+            </li>
+            <li>
+                <a href="javascript:;">第5个项目</a>
+            </li>
+            <li>
+                <a href="javascript:;">第6个项目</a>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var wrapper = document.getElementsByClassName('wrapper')[0],
+            oUl = document.getElementsByClassName('wrapper-ul')[0],
+            ulHeight = 0,
+            t = null,
+            speed = 2;
+            wrapper.onmouseenter = function(){
+                clearInterval(t);
+                t = setInterval(function(){
+                    if(ulHeight >= 240){
+                        clearInterval(t);
+                    }else{
+                        ulHeight = parseInt(getStyle(oUl, 'height')) + speed;
+                        oUl.style.height = ulHeight + 'PX';
+                    }
+                }, 1)
+            }
+
+            wrapper.onmouseleave = function(){
+                clearInterval(t);  //防抖
+                t = setInterval(function(){
+                    if(ulHeight <= 0){
+                        clearInterval(t)
+                    }else{
+                        ulHeight = parseInt(getStyle(oUl, 'height')) - speed;
+                        oUl.style.height = ulHeight + 'px';
+                    }
+                }, 1)
+            }
+      
+        // 获取样式兼容函数    
+        function getStyle(elem, prop){
+            if(window.getComputedStyle){
+                if(!!prop){
+                    return getComputedStyle(elem, null)[prop];  //第二个参数用以获取伪类
+                }
+                return getComputedStyle(elem, null);
+            }else{
+                if(!!prop){
+                    return elem.currentStyle[prop];
+                }else{
+                    return elem.currentStyle;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

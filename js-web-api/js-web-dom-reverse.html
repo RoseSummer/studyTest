@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <p></p>
+        <h1></h1>
+        <a href=""></a>
+        <ul>
+            <li></li>
+        </ul>
+        <strong></strong>
+        <!-- 我是注释君1 -->
+        <!-- 我是注释君2 -->
+    </div>
+    <script>
+         var oDiv = document.getElementsByTagName('div')[0];
+         //子元素节点逆序
+         
+        Element.prototype.reverseElement = function(){
+            var childs = this.childNodes,
+                len = childs.length,
+                item;
+                for(var i = len-1; i > 0; i--){
+                    item = childs[i];
+                    if(item.nodeType === 1){
+                        this.appendChild(item)
+                    }
+                }
+        } 
+        //oDiv.reverseElement();
+
+        //子元素逆序
+         Element.prototype.reverse = function(){
+            var childs = this.childNodes,
+                len = childs.length,
+                item;
+                while(len--){
+                    item = childs[len];
+                    this.appendChild(item)
+                }
+        } 
+       
+        oDiv.reverse();
+        console.log(oDiv.children.length,oDiv.childElementCount) // 5, 5
+    </script>
+</body>
+</html>
